@@ -1,5 +1,7 @@
 import json
 import re
+
+import numpy as np
 import pandas as pd
 import os
 # Assuming ADMIN_ID is a constant representing the admin's identifier in the chat.
@@ -60,6 +62,6 @@ def give_conversation(path_file):
 PATH = "../../data/"
 all_df = []
 for file in os.listdir(PATH + "raw"):
-    all_df.append(give_conversation(PATH + f'raw/{file}'))
+    all_df.append(give_conversation(PATH + f'raw/{file}').replace('', np.nan).dropna())
 dataset_df = pd.concat(all_df, ignore_index=True)
 dataset_df.to_csv(PATH + "interim/dataset.csv")
